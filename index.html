@@ -377,14 +377,18 @@
         }
 
         .timer-photo-block {
-            position: relative;
-            width: 100%;
-            max-width: 520px;
-            height: 320px;
-            margin: 25px auto;
-            border-radius: 10px;
-            overflow: hidden;
-        }
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    aspect-ratio: 3/4;
+    margin: 25px auto;
+    border-radius: 10px;
+    overflow: hidden;
+    background-size: contain !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-color: #D5C9B8;
+}
         .timer-overlay {
             position: absolute;
             top: 0; left: 0;
@@ -749,8 +753,7 @@
         <!-- ФОТО 3 (с таймером) -->
         <section class="fade-in">
             <p class="heading-script" style="font-size:42px;">Фотография</p>
-            <div class="timer-photo-block" style="background: url('https://i.ibb.co/k2HWtFc8/72di5-A5-Vc-SR-Fl-Wj0-VHQr-VSb-P6u-I5ac-Xs-ND6-WXWZJPSmrf-T3-0t-YI4w-C2jpahbk-XZKq7-Xb-Zq7l7-Dy-Tvi8rw-T.jpg') center/cover no-repeat; background-color: #D5C9B8;">
-                <div class="timer-overlay">
+<div class="timer-photo-block" style="background-image: url('https://i.ibb.co/k2HWtFc8/72di5-A5-Vc-SR-Fl-Wj0-VHQr-VSb-P6u-I5ac-Xs-ND6-WXWZJPSmrf-T3-0t-YI4w-C2jpahbk-XZKq7-Xb-Zq7l7-Dy-Tvi8rw-T.jpg');">                <div class="timer-overlay">
                     <div class="timer-grid">
                         <div class="timer-cell">
                             <div class="number" id="tDays">00</div>
