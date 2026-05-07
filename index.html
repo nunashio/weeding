@@ -34,7 +34,6 @@
             overflow-x: hidden;
         }
 
-        /* ========== ВСТУПИТЕЛЬНЫЙ ЭКРАН ========== */
         .intro-overlay {
             position: fixed;
             top: 0;
@@ -86,7 +85,6 @@
             56% { transform: scale(1); }
         }
 
-        /* ========== ОСНОВНОЙ КОНТЕНТ ========== */
         .main-content {
             max-width: 750px;
             margin: 0 auto;
@@ -109,7 +107,6 @@
         .fade-in-delay-4 { animation-delay: 0.8s; }
         .fade-in-delay-5 { animation-delay: 1s; }
 
-        /* ========== МУЗЫКА ========== */
         .music-btn {
             position: fixed;
             top: 20px;
@@ -140,7 +137,6 @@
             50% { box-shadow: 0 0 0 20px rgba(139,115,85,0); }
         }
 
-        /* ========== СЕКЦИИ ========== */
         section {
             padding: 55px 0;
         }
@@ -188,7 +184,6 @@
             color: var(--gold);
         }
 
-        /* ========== ГЛАВНЫЙ ЭКРАН ========== */
         .hero {
             text-align: center;
             padding: 30px 0 50px;
@@ -220,7 +215,6 @@
             margin: 15px 0 30px;
         }
 
-        /* ========== ФОТО ========== */
         .photo-frame {
             position: relative;
             width: 280px;
@@ -228,10 +222,6 @@
             margin: 0 auto 35px;
             border: 14px solid rgba(139, 115, 85, 0.2);
             border-radius: 6px;
-            background: linear-gradient(135deg, var(--cream) 0%, #E8DDD0 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
             box-shadow: 0 25px 60px rgba(92, 74, 58, 0.12);
         }
@@ -240,20 +230,7 @@
             height: 100%;
             object-fit: cover;
         }
-        .photo-frame-placeholder {
-            text-align: center;
-            color: var(--brown);
-            opacity: 0.5;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 17px;
-        }
-        .photo-frame-placeholder .ph-icon {
-            font-size: 55px;
-            display: block;
-            margin-bottom: 15px;
-        }
 
-        /* ========== КАЛЕНДАРИК ========== */
         .calendar-mini {
             width: 240px;
             margin: 35px auto;
@@ -311,7 +288,6 @@
             letter-spacing: 4px;
         }
 
-        /* ========== ТЕКСТ ========== */
         .text-center { text-align: center; }
         .heading-caps {
             font-size: 15px;
@@ -345,7 +321,6 @@
             font-style: italic;
         }
 
-        /* ========== ПРОГРАММА ========== */
         .program-item {
             display: flex;
             gap: 25px;
@@ -378,21 +353,16 @@
             line-height: 1.6;
         }
 
-        /* ========== КАРТА ========== */
-        .venue-photo-placeholder {
+        .venue-photo {
             width: 100%;
             max-width: 520px;
             height: 220px;
             margin: 25px auto;
-            background: linear-gradient(135deg, var(--cream) 0%, #DDD2C5 100%);
             border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--brown);
-            opacity: 0.6;
-            font-size: 17px;
+            object-fit: cover;
+            display: block;
         }
+
         .btn-map {
             display: inline-block;
             padding: 15px 38px;
@@ -406,7 +376,6 @@
             margin-top: 12px;
         }
 
-        /* ========== ТАЙМЕР ========== */
         .timer-photo-block {
             position: relative;
             width: 100%;
@@ -415,7 +384,6 @@
             margin: 25px auto;
             border-radius: 10px;
             overflow: hidden;
-            background: linear-gradient(135deg, #D5C9B8 0%, #C4B5A0 100%);
         }
         .timer-overlay {
             position: absolute;
@@ -451,7 +419,6 @@
             color: rgba(255,255,255,0.7);
         }
 
-        /* ========== АНКЕТА ========== */
         .rsvp-form {
             background: var(--white);
             border: 1px solid var(--accent);
@@ -545,7 +512,6 @@
         }
         .form-success.show { display: block; }
 
-        /* ========== ОРГАНИЗАТОР ========== */
         .organizer-block {
             text-align: center;
             padding: 35px;
@@ -573,7 +539,6 @@
             margin-top: 12px;
         }
 
-        /* ========== УГОЛКИ ========== */
         .corner-decoration {
             position: absolute;
             width: 25px;
@@ -588,7 +553,6 @@
         .corner-bl { bottom: 8px; left: 8px; border-width: 0 0 1px 1px; }
         .corner-br { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
 
-        /* ========== ФУТЕР ========== */
         .footer {
             text-align: center;
             padding: 50px 0;
@@ -637,9 +601,9 @@
             <div class="hero-arrow">⌄</div>
         </section>
 
-        <!-- ФОТО -->
+        <!-- ФОТО 1 (главное) -->
         <div class="photo-frame fade-in fade-in-delay-1">
-            <img src="https://i.ibb.co/rGGHcXzr/hf-DCN9grw-FGty-Bf1-VCe9-A1-La-Z-ins-VBEtz-Byul-H37u2kyu-D-2i-WMsw-Wnxed-1qcm-IShlolu-AOysd-NE-c-BSz-Sy.jpg" alt="Максим и Вероника" style="width:100%; height:100%; object-fit:cover;">
+            <img src="https://i.ibb.co/rGGHcXzr/hfDCN9grwFGtyBf1VCe9A1LaZinsVBEtzByulH37u2kyuD2iWMswWnxed1qcmIShloluAOysdNEcBSzSy.jpg" alt="Максим и Вероника">
         </div>
 
         <!-- РОДНЫЕ И БЛИЗКИЕ -->
@@ -689,8 +653,9 @@
             <p class="text-body">
                 будут проходить в банкетном зале <strong>«Оазис»</strong>
             </p>
-            <div class="venue-photo<img src="https://i.ibb.co/qLWg5k0T/XL.jpg" alt="Ресторан Оазис" style="width:100%; max-width:520px; height:220px; object-fit:cover; border-radius:10px; display:block; margin:0 auto;">-placeholder">📸 Фото ресторана «Оазис»</div>
-            <a href="https://yandex.ru/maps/?text=г.%20Вольск,%20ул.%20Коммуническая,%20д.37" target="_blank" class="btn-map">Открыть на Яндекс.Картах</a>
+            <!-- ФОТО 2 (ресторан) -->
+            <img src="https://i.ibb.co/qLWg5k0T/XL.jpg" alt="Ресторан Оазис" class="venue-photo">
+            <a href="https://yandex.ru/maps/?text=г.%20Вольск,%20ул.%20Коммунистическая,%20д.37" target="_blank" class="btn-map">Открыть на Яндекс.Картах</a>
         </section>
 
         <!-- ПРОГРАММА ДНЯ -->
@@ -781,34 +746,34 @@
             </div>
         </section>
 
-        <!-- ТАЙМЕР -->
+        <!-- ФОТО 3 (с таймером) -->
         <section class="fade-in">
             <p class="heading-script" style="font-size:42px;">Фотография</p>
-            <div class="timer-photo-block" style="background: url('https://i.ibb.co/k2HWtFc8/72di5-A5-Vc-SR-Fl-Wj0-VHQr-VSb-P6u-I5ac-Xs-ND6-WXWZJPSmrf-T3-0t-YI4w-C2jpahbk-XZKq7-Xb-Zq7l7-Dy-Tvi8rw-T.jpg') center/cover no-repeat;">
-    <div class="timer-overlay">
-        <div class="timer-grid">
-            <div class="timer-cell">
-                <div class="number" id="tDays">00</div>
-                <div class="label">Дней</div>
+            <div class="timer-photo-block" style="background: url('https://i.ibb.co/k2HWtFc8/72di5-A5-Vc-SR-Fl-Wj0-VHQr-VSb-P6u-I5ac-Xs-ND6-WXWZJPSmrf-T3-0t-YI4w-C2jpahbk-XZKq7-Xb-Zq7l7-Dy-Tvi8rw-T.jpg') center/cover no-repeat; background-color: #D5C9B8;">
+                <div class="timer-overlay">
+                    <div class="timer-grid">
+                        <div class="timer-cell">
+                            <div class="number" id="tDays">00</div>
+                            <div class="label">Дней</div>
+                        </div>
+                        <div class="timer-colon">:</div>
+                        <div class="timer-cell">
+                            <div class="number" id="tHours">00</div>
+                            <div class="label">Часов</div>
+                        </div>
+                        <div class="timer-colon">:</div>
+                        <div class="timer-cell">
+                            <div class="number" id="tMinutes">00</div>
+                            <div class="label">Минут</div>
+                        </div>
+                        <div class="timer-colon">:</div>
+                        <div class="timer-cell">
+                            <div class="number" id="tSeconds">00</div>
+                            <div class="label">Секунд</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="timer-colon">:</div>
-            <div class="timer-cell">
-                <div class="number" id="tHours">00</div>
-                <div class="label">Часов</div>
-            </div>
-            <div class="timer-colon">:</div>
-            <div class="timer-cell">
-                <div class="number" id="tMinutes">00</div>
-                <div class="label">Минут</div>
-            </div>
-            <div class="timer-colon">:</div>
-            <div class="timer-cell">
-                <div class="number" id="tSeconds">00</div>
-                <div class="label">Секунд</div>
-            </div>
-        </div>
-    </div>
-</div>
         </section>
 
         <!-- МОНОГРАММА -->
@@ -818,7 +783,7 @@
             <span class="line"></span>
         </div>
 
-        <!-- АНКЕТА -->
+        <!-- АНКЕТА ГОСТЯ -->
         <section class="fade-in section-box">
             <p class="heading-script" style="font-size:42px;">Анкета гостя</p>
             <p class="text-body" style="margin-bottom:28px;">
@@ -871,12 +836,10 @@
     </div>
 
     <script>
-        // ВСТУПИТЕЛЬНЫЙ ЭКРАН
         function openInvitation() {
             document.getElementById('introOverlay').classList.add('hidden');
         }
 
-        // МУЗЫКА
         function toggleMusic() {
             var m = document.getElementById('bgMusic');
             var b = document.getElementById('musicBtn');
@@ -889,7 +852,6 @@
             }
         }
 
-        // КАЛЕНДАРИК
         (function(){
             var c = document.getElementById('calendarDays');
             var h = '';
@@ -900,7 +862,6 @@
             c.innerHTML = h;
         })();
 
-        // ТАЙМЕР
         var wd = new Date('2026-08-15T13:00:00');
         function tick(){
             var n = new Date();
@@ -924,7 +885,6 @@
         tick();
         setInterval(tick, 1000);
 
-        // АНКЕТА
         document.getElementById('rsvpForm').addEventListener('submit', function(e){
             e.preventDefault();
             document.getElementById('rsvpForm').style.display='none';
