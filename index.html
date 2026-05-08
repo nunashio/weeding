@@ -676,11 +676,18 @@
         <!-- ========== ПАРЯЩИЕ ЛЕПЕСТКИ ========== -->
     <div class="petals-container" id="petalsContainer"></div>
 
-    <!-- ========== ВСТУПИТЕЛЬНЫЙ ЭКРАН ========== -->
+        <!-- ========== ВСТУПИТЕЛЬНЫЙ ЭКРАН ========== -->
     <div class="intro-overlay" id="introOverlay">
-        <p class="intro-text">Вы получили приглашение</p>
-        <div class="intro-heart">💌</div>
-        <p class="intro-subtitle">Нажмите, чтобы открыть</p>
+        <div style="border: 2px solid var(--light-brown); padding: 50px 40px; text-align: center; position: relative; background: rgba(255,255,255,0.25); max-width: 420px; width: 90%;">
+            <span class="corner-decoration corner-tl" style="position:absolute; top:8px; left:8px;"></span>
+            <span class="corner-decoration corner-tr" style="position:absolute; top:8px; right:8px;"></span>
+            <span class="corner-decoration corner-bl" style="position:absolute; bottom:8px; left:8px;"></span>
+            <span class="corner-decoration corner-br" style="position:absolute; bottom:8px; right:8px;"></span>
+            <p class="intro-text" style="font-family: 'Great Vibes', cursive; font-size: 38px; animation: none;">Вы получили приглашение</p>
+            <div class="intro-heart">💌</div>
+            <p class="intro-subtitle">Нажмите, чтобы открыть</p>
+            <div style="margin-top: 25px; font-family: 'Great Vibes', cursive; font-size: 32px; color: var(--gold); letter-spacing: 3px;">М & В</div>
+        </div>
     </div>
 
     <!-- ========== КНОПКА МУЗЫКИ ========== -->
@@ -1046,7 +1053,7 @@
                 petal.className = 'petal';
                 
                 // Случайный размер
-                var size = Math.random() * 14 + 8;
+                var size = Math.random() * 20 + 10;
                 petal.style.fontSize = size + 'px';
                 
                 // Случайная позиция слева
@@ -1074,16 +1081,16 @@
             }
 
             // Создаём начальные лепестки
-            for (var i = 0; i < 12; i++) {
+         for (var i = 0; i < 25; i++) {
                 setTimeout(function() {
                     createPetal();
-                }, i * 600);
+                }, i * 250);
             }
 
-            // Создаём новые лепестки постоянно
+            // Создаём новые лепестки чаще
             setInterval(function() {
                 createPetal();
-            }, 1800);
+            }, 900);
         })();
     </script>
 
