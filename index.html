@@ -909,22 +909,48 @@
         </div>
 
         <!-- АНКЕТА ГОСТЯ -->
-        <section class="fade-in section-box">
-            <p class="heading-script" style="font-size:42px;">Анкета гостя</p>
-            <p class="text-body" style="margin-bottom:28px;">
-                Будем очень признательны, если вы подтвердите своё присутствие и заполните анкету <strong>до 1 июля</strong>
-            </p>
-            
-            <!-- НОВАЯ КНОПКА ДЛЯ ПЕРЕХОДА К АНКЕТЕ -->
-            <div style="text-align: center; margin-top: 30px;">
-                <a href="https://forms.yandex.ru/u/69fe251990fa7b74ed752cc4" target="_blank" class="btn-submit" style="display: inline-block; width: auto; padding: 18px 50px; text-decoration: none; font-size: 15px; letter-spacing: 5px; border-radius: 50px; background: var(--brown); color: var(--white); text-transform: uppercase; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(92, 74, 58, 0.2);">
-                    Заполнить анкету ✍️
-                </a>
-                <p style="font-family: 'Montserrat', sans-serif; font-size: 12px; color: #999; margin-top: 16px; letter-spacing: 1px;">
-                    * Вы будете перенаправлены на страницу Яндекс.Форм
-                </p>
+        <!-- АНКЕТА ГОСТЯ -->
+<section class="fade-in section-box">
+    <p class="heading-script" style="font-size:42px;">Анкета гостя</p>
+    <p class="text-body" style="margin-bottom:28px;">
+        Будем очень признательны, если вы подтвердите своё присутствие и заполните анкету <strong>до 1 июля</strong>
+    </p>
+    <div class="rsvp-form">
+        <form id="rsvpForm">
+            <div class="form-group">
+                <label class="form-label">Имя и фамилия</label>
+                <input type="text" class="form-input" name="name" placeholder="Иван Иванов / Мария Иванова" required>
             </div>
-        </section>
+            <div class="form-group">
+                <label class="form-label">Подтвердите своё присутствие</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="attendance" value="Да, смогу" checked> Да, смогу
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="attendance" value="К сожалению, не смогу"> К сожалению, не смогу
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Ваши предпочтения в напитках</label>
+                <div class="drinks-grid">
+                    <label class="drink-option"><input type="checkbox" name="drinks" value="Шампанское"><span class="drink-checkbox"></span>🍾 Шампанское</label>
+                    <label class="drink-option"><input type="checkbox" name="drinks" value="Белое вино"><span class="drink-checkbox"></span>🥂 Белое вино</label>
+                    <label class="drink-option"><input type="checkbox" name="drinks" value="Красное вино"><span class="drink-checkbox"></span>🍷 Красное вино</label>
+                    <label class="drink-option"><input type="checkbox" name="drinks" value="Водка"><span class="drink-checkbox"></span>🥃 Водка</label>
+                    <label class="drink-option"><input type="checkbox" name="drinks" value="Пиво"><span class="drink-checkbox"></span>🍺 Пиво</label>
+                    <label class="drink-option"><input type="checkbox" name="drinks" value="Безалкогольное"><span class="drink-checkbox"></span>🧃 Безалкогольное (сок/минералка)</label>
+                </div>
+            </div>
+            <button type="submit" class="btn-submit">Отправить</button>
+        </form>
+        <div class="form-success" id="formSuccess">
+            <p>✨ Спасибо!</p>
+            <p>Ваша анкета отправлена. С нетерпением ждём вас!</p>
+        </div>
+    </div>
+</section>
        
 
         <footer class="footer fade-in">С нетерпением ждём вас!</footer>
@@ -1008,10 +1034,46 @@
         setInterval(tick, 1000);
 
         // АНКЕТА
+        // АНКЕТА — отправка через Formspree
         document.getElementById('rsvpForm').addEventListener('submit', function(e){
             e.preventDefault();
-            document.getElementById('rsvpForm').style.display = 'none';
-            document.getElementById('formSuccess').classList.add('show');
+
+            var form = this;
+            var formData = new FormData(form);
+
+            // Собираем напитки
+            var checkedDrinks = document.querySelectorAll('input[name="drinks"]:checked');
+            var drinksList = [];
+            checkedDrinks.forEach(function(cb) {
+                drinksList.push(cb.value);
+            });
+            formData.append('Напитки', drinksList.join(', ') || 'Не указано');
+
+            var btn = form.querySelector('.btn-submit');
+            btn.textContent = 'Отправляется...';
+            btn.style.opacity = '0.7';
+
+            // ЗДЕСЬ ВСТАВЬ СВОЙ КОД ИЗ FORMSPREE
+            fetch('https://formspree.io/f/xnjwgpzv', {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    document.getElementById('rsvpForm').style.display = 'none';
+                    document.getElementById('formSuccess').classList.add('show');
+                } else {
+                    alert('Ошибка! Попробуйте ещё раз.');
+                    btn.textContent = 'Отправить';
+                    btn.style.opacity = '1';
+                }
+            })
+            .catch(function() {
+                alert('Ошибка соединения.');
+                btn.textContent = 'Отправить';
+                btn.style.opacity = '1';
+            });
         });
                 // ПАРЯЩИЕ ЛЕПЕСТКИ
         (function() {
