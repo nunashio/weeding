@@ -629,9 +629,52 @@
             .program-item { flex-direction: column; gap: 8px; }
             .section-box { padding: 30px 20px; }
         }
+                /* ========== ПАРЯЩИЕ ЛЕПЕСТКИ ========== */
+        .petals-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            top: -60px;
+            opacity: 0;
+            animation: petalFall linear infinite;
+        }
+
+        @keyframes petalFall {
+            0% {
+                transform: translateY(-60px) rotate(0deg) translateX(0px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(105vh) rotate(720deg) translateX(120px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes petalSway {
+            0%, 100% { margin-left: 0; }
+            25% { margin-left: 30px; }
+            75% { margin-left: -30px; }
+        }
     </style>
 </head>
 <body>
+        <!-- ========== ПАРЯЩИЕ ЛЕПЕСТКИ ========== -->
+    <div class="petals-container" id="petalsContainer"></div>
 
     <!-- ========== ВСТУПИТЕЛЬНЫЙ ЭКРАН ========== -->
     <div class="intro-overlay" id="introOverlay">
@@ -652,19 +695,34 @@
     <div class="main-content" id="mainContent">
 
         <!-- ГЛАВНЫЙ ЭКРАН -->
-        <section class="hero fade-in">
-            <h1 class="hero-names">Максим <span class="hero-ampersand">&</span> Вероника</h1>
-            <div class="hero-date-line">Август 15 2026</div>
-            <div class="hero-arrow">⌄</div>
-        </section>
+      <section class="hero fade-in">
+    <h1 class="hero-names">Максим <span class="hero-ampersand">&</span> Вероника</h1>
+    <div class="hero-date-line">Август 15 2026</div>
+    <div class="hero-arrow">⌄</div>
+</section>
 
-        <!-- ФОТО 1 (главное) -->
-        <div class="photo-frame fade-in fade-in-delay-1">
+<!-- ДЕКОРАТИВНЫЙ КВАДРАТ -->
+<div class="fade-in fade-in-delay-1" style="text-align:center; padding: 10px 0 30px;">
+    <div style="display:inline-block; border: 2px solid var(--light-brown); padding: 30px 40px; position: relative; max-width: 500px; background: rgba(255,255,255,0.3);">
+        <span class="corner-decoration corner-tl" style="position:absolute; top:6px; left:6px;"></span>
+        <span class="corner-decoration corner-tr" style="position:absolute; top:6px; right:6px;"></span>
+        <span class="corner-decoration corner-bl" style="position:absolute; bottom:6px; left:6px;"></span>
+        <span class="corner-decoration corner-br" style="position:absolute; bottom:6px; right:6px;"></span>
+        <p style="font-family: 'Great Vibes', cursive; font-size: 36px; color: var(--dark-brown); margin-bottom: 12px;">Дорогие гости!</p>
+        <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: #777; line-height: 1.8; font-weight: 300;">
+            Мы счастливы пригласить вас на самый важный день в нашей жизни. Ваше присутствие — лучший подарок для нас!
+        </p>
+        <div style="margin-top: 18px; font-size: 22px; letter-spacing: 6px; color: var(--gold);">✦ ✦ ✦</div>
+    </div>
+</div>
+
+<!-- ФОТО 1 (главное) -->
+<div class="photo-frame fade-in fade-in-delay-2">
             <img src="https://i.ibb.co/rGGHcXzr/hfDCN9grwFGtyBf1VCe9A1LaZinsVBEtzByulH37u2kyuD2iWMswWnxed1qcmIShloluAOysdNEcBSzSy.jpg" alt="Максим и Вероника">
         </div>
 
         <!-- РОДНЫЕ И БЛИЗКИЕ -->
-        <section class="text-center fade-in fade-in-delay-2 section-box">
+        <section class="text-center fade-in fade-in-delay-3 section-box">
             <span class="corner-decoration corner-tl"></span>
             <span class="corner-decoration corner-tr"></span>
             <span class="corner-decoration corner-bl"></span>
@@ -809,7 +867,7 @@
                 <span class="line"></span>
             </div>
             <div class="timer-photo-wrapper">
-                <img src="https://i.ibb.co/k2HWtFc8/72di5-A5-Vc-SR-Fl-Wj0-VHQr-VSb-P6u-I5ac-Xs-ND6-WXWZJPSmrf-T3-0t-YI4w-C2jpahbk-XZKq7-Xb-Zq7l7-Dy-Tvi8rw-T.jpg" alt="Фото">
+                <img src="https://i.ibb.co/w2k3n3C/s6jek2i-PJX147-Fk6i5i-XDvxop-Bg-AAMw-Mne7-U8w-MLWuczt-U8h-Yq-W5-Cv-Oz3-XIVm-p-O1-Bzm-Ew-ESd-Ft-T6a-Mnat-c.jpg" alt="Фото">
                 <div class="timer-overlay">
                     <div class="timer-grid">
                         <div class="timer-cell">
@@ -972,6 +1030,61 @@
             document.getElementById('rsvpForm').style.display = 'none';
             document.getElementById('formSuccess').classList.add('show');
         });
+                // ПАРЯЩИЕ ЛЕПЕСТКИ
+        (function() {
+            var container = document.getElementById('petalsContainer');
+            var petalShapes = ['🌸', '💮', '🏵️', '🌺', '✿', '❀', '🌷', '⚘'];
+            var colors = [
+                'rgba(212, 196, 176, 0.4)',  // бежевый
+                'rgba(166, 138, 100, 0.35)', // золотой
+                'rgba(200, 180, 160, 0.4)',  // светлый
+                'rgba(180, 150, 130, 0.35)', // тёплый
+            ];
+
+            function createPetal() {
+                var petal = document.createElement('div');
+                petal.className = 'petal';
+                
+                // Случайный размер
+                var size = Math.random() * 14 + 8;
+                petal.style.fontSize = size + 'px';
+                
+                // Случайная позиция слева
+                petal.style.left = Math.random() * 100 + '%';
+                
+                // Случайный лепесток
+                petal.textContent = petalShapes[Math.floor(Math.random() * petalShapes.length)];
+                
+                // Случайная длительность падения
+                var duration = Math.random() * 12 + 10;
+                petal.style.animationDuration = duration + 's';
+                
+                // Случайная задержка
+                petal.style.animationDelay = Math.random() * 8 + 's';
+                
+                // Случайный цвет (для текстовых эмодзи не нужен, но если захочешь кружочки — пригодится)
+                petal.style.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(petal);
+                
+                // Удаляем после завершения анимации
+                setTimeout(function() {
+                    petal.remove();
+                }, (duration + 8) * 1000);
+            }
+
+            // Создаём начальные лепестки
+            for (var i = 0; i < 12; i++) {
+                setTimeout(function() {
+                    createPetal();
+                }, i * 600);
+            }
+
+            // Создаём новые лепестки постоянно
+            setInterval(function() {
+                createPetal();
+            }, 1800);
+        })();
     </script>
 
 </body>
