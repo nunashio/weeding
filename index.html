@@ -1013,5 +1013,21 @@
             setInterval(createPetal, 1200);
         })();
     </script>
+            // ОСТАНОВКА МУЗЫКИ ПРИ СВОРАЧИВАНИИ
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                bgMusic.pause();
+                musicBtn.classList.remove('playing');
+            }
+        });
+
+        // ОСТАНОВКА ПРИ УХОДЕ СО СТРАНИЦЫ
+        window.addEventListener('pagehide', function() {
+            bgMusic.pause();
+        });
+
+        window.addEventListener('beforeunload', function() {
+            bgMusic.pause();
+        });
 </body>
 </html>
