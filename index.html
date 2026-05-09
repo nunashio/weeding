@@ -650,6 +650,9 @@
             .program-item { flex-direction: column; gap: 8px; }
             .section-box { padding: 30px 20px; }
             .page-names { padding-left: 5%; }
+            .page, .section-box, .timer-section-block, .calendar-mini {
+                scroll-snap-align: center;
+            }
         }
     </style>
 </head>
@@ -1033,5 +1036,107 @@
             setInterval(createPetal, 900);
         })();
     </script>
+            // СВАЙПЫ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ
+        (function() {
+            // Собираем все "страницы" (секции и основные блоки)
+            var pages = document.querySelectorAll('.page, .section-box, .timer-section-block, .calendar-mini');
+            var currentPage = 0;
+            var touchStartY = 0;
+            var touchEndY = 0;
+            var isSwiping = false;
+
+            // Находим все страницы
+            var allPages = [];
+            allPages.push(document.getElementById('page1'));
+            allPages.push(document.getElementById('page2'));
+            
+            // Добавляем все секции внутри main-content
+            var sections = document.querySelectorAll('.main-content .section-box, .main-content .timer-section-block, .main-content .calendar-mini');
+            sections.forEach(function(s) {
+                allPages.push(s);
+            });
+
+            function scrollToPage(index) {
+                if (index >= 0 && index < allPages.length) {
+                    currentPage = index;
+                    allPages[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+
+            // Отслеживаем касания
+            document.addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+                isSwiping = true;
+            }, { passive: true });
+
+            document.addEventListener('touchend', function(e) {
+                if (!isSwiping) return;
+                touchEndY = e.changedTouches[0].clientY;
+                var diff = touchStartY - touchEndY;
+                
+                // Свайп вверх (листаем вниз)
+                if (diff > 60 && currentPage < allPages.length - 1) {
+                    scrollToPage(currentPage + 1);
+                }
+                // Свайп вниз (листаем вверх)
+                else if (diff < -60 && currentPage > 0) {
+                    scrollToPage(currentPage - 1);
+                }
+                
+                isSwiping = false;
+            }, { passive: true });
+
+            // Отслеживаем колёсико мыши для десктопа
+            var wheelTimeout;
+            document.addEventListener('wheel', function(e) {
+                clearTimeout(wheelTimeout);
+                wheelTimeout = setTimeout(function() {
+                    if (e.deltaY > 50 && currentPage < allPages.length - 1) {
+                        scrollToPage(currentPage + 1);
+                    } else if (e.deltaY < -50 && currentPage > 0) {
+                        scrollToPage(currentPage - 1);
+                    }
+                }, 100);
+            }, { passive: true });
+
+            // Кнопки навигации (появятся на мобильных)
+            if (window.innerWidth <= 600) {
+                var navDots = document.createElement('div');
+                navDots.style.cssText = 'position:fixed; right:15px; top:50%; transform:translateY(-50%); z-index:998; display:flex; flex-direction:column; gap:10px;';
+                
+                allPages.forEach(function(page, index) {
+                    var dot = document.createElement('div');
+                    dot.style.cssText = 'width:8px; height:8px; border-radius:50%; background:rgba(138,138,138,0.4); cursor:pointer; transition:all 0.3s;';
+                    dot.addEventListener('click', function() {
+                        scrollToPage(index);
+                    });
+                    navDots.appendChild(dot);
+                });
+                
+                document.body.appendChild(navDots);
+
+                // Обновляем активную точку
+                var observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            var index = allPages.indexOf(entry.target);
+                            if (index >= 0) {
+                                currentPage = index;
+                                var dots = navDots.querySelectorAll('div');
+                                dots.forEach(function(d, i) {
+                                    d.style.background = i === currentPage ? 'rgba(138,138,138,0.9)' : 'rgba(138,138,138,0.4)';
+                                    d.style.width = i === currentPage ? '10px' : '8px';
+                                    d.style.height = i === currentPage ? '10px' : '8px';
+                                });
+                            }
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                allPages.forEach(function(page) {
+                    observer.observe(page);
+                });
+            }
+        })();
 </body>
 </html>
