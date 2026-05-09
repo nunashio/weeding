@@ -269,63 +269,31 @@
         }
 
         /* ========== КАЛЕНДАРИК ========== */
-        .calendar-mini {
-            width: 240px;
-            margin: 35px auto;
-            background: var(--white);
-            border: 1px solid var(--accent);
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.06);
-        }
-        .calendar-header {
-            background: var(--dark-brown);
-            color: var(--white);
-            text-align: center;
-            padding: 12px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
-        .calendar-body {
-            padding: 18px;
-        }
-        .calendar-weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            text-align: center;
-            font-size: 11px;
-            color: var(--brown);
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-        .calendar-days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            text-align: center;
-            font-size: 14px;
-            color: var(--dark-brown);
-        }
-        .calendar-days span {
-            padding: 6px;
-            border-radius: 50%;
-        }
-        .calendar-days .empty {
-            color: transparent;
-        }
-        .calendar-days .day-15 {
-            background: var(--brown);
-            color: var(--white);
-            font-weight: 600;
-        }
-        .calendar-hearts {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 16px;
-            color: var(--brown);
-            letter-spacing: 4px;
-        }
+                // КАЛЕНДАРИК — АВГУСТ 2026 (начинается с субботы)
+        (function(){
+            var c = document.getElementById('calendarDays');
+            // 1 августа 2026 — суббота (6-й день недели, Пн=0, Вс=6)
+            // Но в нашем календаре неделя с Пн по Вс: 1-е число = суббота = позиция 5 (0=Пн, 1=Вт, 2=Ср, 3=Чт, 4=Пт, 5=Сб, 6=Вс)
+            var firstDay = 5; // суббота
+            var daysInMonth = 31;
+            var h = '';
+            
+            // Пустые ячейки до 1-го числа
+            for (var i = 0; i < firstDay; i++) {
+                h += '<span class="empty">·</span>';
+            }
+            
+            // Дни месяца
+            for (var d = 1; d <= daysInMonth; d++) {
+                if (d === 15) {
+                    h += '<span class="day-15" style="position:relative; font-weight:700;">15<span style="position:absolute; top:-6px; left:50%; transform:translateX(-50%); font-size:18px; color:#c4956a; pointer-events:none;">♥</span></span>';
+                } else {
+                    h += '<span>' + d + '</span>';
+                }
+            }
+            
+            c.innerHTML = h;
+        })();
 
         /* ========== ТАЙМЕР ========== */
         .timer-section-block {
@@ -901,14 +869,14 @@
                 <span class="line"></span>
             </div>
             <div class="timer-photo-wrapper">
-                <img src="https://i.ibb.co/6R5Ggdft/F7057872-38-D7-4-EB6-AC62-0-A427-B721-B60.jpg" alt="Фото">
+                <img src="https://i.ibb.co/tksCMJX/Yhj-P178-Gu-Bu5-JIv-KXzf-Ef-Gbt-FNt-Lt-V9ng-Gs-Vt-Quev-WXFVL6pm6py-T9s-PUtkhsga-Ehu-Jb-Yp-Nyoq-S9s9v-M.jpg" alt="Фото">
                 <div class="timer-overlay">
                     <div class="timer-grid">
                         <div class="timer-cell">
                             <div class="number" id="tDays">00</div>
                             <div class="label">Дней</div>
                         </div>
-                        <div class="timer-colon">:</div>
+                        <div class="timer-colon">:</div> 
                         <div class="timer-cell">
                             <div class="number" id="tHours">00</div>
                             <div class="label">Часов</div>
