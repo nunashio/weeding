@@ -24,14 +24,43 @@
             box-sizing: border-box;
         }
 
+        /* ========== ФОН — СЕРЫЙ ШЕЛК ========== */
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg);
-            background-image: radial-gradient(circle, rgba(139,115,85,0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
+            background: linear-gradient(135deg, #D5C9C0 0%, #C8BBB0 15%, #D5C9C0 30%, #BFB2A7 45%, #D0C4BA 55%, #C5B8AE 70%, #D5C9C0 85%, #BFB2A7 100%);
+            background-size: 400% 400%;
+            animation: silkShimmer 18s ease-in-out infinite;
             color: var(--black);
             line-height: 1.7;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                repeating-linear-gradient(0deg, transparent, rgba(255,255,255,0.03) 2px, transparent 4px),
+                repeating-linear-gradient(90deg, transparent, rgba(255,255,255,0.02) 1px, transparent 3px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes silkShimmer {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 0%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .main-content, section, .intro-overlay, .petals-container, .music-btn {
+            position: relative;
+            z-index: 1;
         }
 
         /* ========== ВСТУПИТЕЛЬНЫЙ ЭКРАН ========== */
@@ -41,16 +70,28 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--cream);
-            background-image: radial-gradient(circle, rgba(139,115,85,0.05) 1px, transparent 1px);
-            background-size: 30px 30px;
+            background: linear-gradient(135deg, #D5C9C0 0%, #C8BBB0 15%, #D5C9C0 30%, #BFB2A7 45%, #D0C4BA 55%, #C5B8AE 70%, #D5C9C0 85%, #BFB2A7 100%);
+            background-size: 400% 400%;
+            animation: silkShimmer 18s ease-in-out infinite;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             cursor: pointer;
-            transition: opacity 2s ease, visibility 2s ease;
+            transition: opacity 2.5s ease, visibility 2.5s ease;
+        }
+
+        .intro-overlay::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                repeating-linear-gradient(0deg, transparent, rgba(255,255,255,0.03) 2px, transparent 4px),
+                repeating-linear-gradient(90deg, transparent, rgba(255,255,255,0.02) 1px, transparent 3px);
+            pointer-events: none;
         }
 
         .intro-overlay.fade-out {
@@ -59,12 +100,11 @@
         }
 
         .intro-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 32px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 38px;
             color: var(--dark-brown);
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-align: center;
-            animation: gentleFloat 3s ease-in-out infinite;
         }
 
         .intro-heart {
@@ -81,11 +121,6 @@
             text-transform: uppercase;
         }
 
-        @keyframes gentleFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
             14% { transform: scale(1.15); }
@@ -94,13 +129,25 @@
             56% { transform: scale(1); }
         }
 
-        /* ========== ПЛАВНОЕ ПОЯВЛЕНИЕ КОНТЕНТА ========== */
+        /* ========== ПЛАВНЫЕ ПЕРЕХОДЫ МЕЖДУ СЕКЦИЯМИ ========== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========== ОСНОВНОЙ КОНТЕНТ ========== */
         .main-content {
             max-width: 750px;
             margin: 0 auto;
             padding: 50px 25px;
             opacity: 0;
-            transition: opacity 2.5s ease;
+            transition: opacity 3s ease;
         }
 
         .main-content.visible {
@@ -167,8 +214,9 @@
         }
 
         .section-box {
-            background: rgba(255,255,255,0.5);
-            border: 1px solid rgba(196,168,130,0.25);
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(3px);
+            border: 1px solid rgba(196,168,130,0.2);
             border-radius: 12px;
             padding: 45px 35px;
             margin: 20px 0;
@@ -209,23 +257,68 @@
             color: var(--gold);
         }
 
-        /* ========== ГЛАВНЫЙ ЭКРАН ========== */
+        /* ========== ГЛАВНЫЙ ЭКРАН — АНИМИРОВАННЫЕ ИМЕНА ========== */
         .hero {
             text-align: center;
-            padding: 30px 0 50px;
+            padding: 40px 0 50px;
+            overflow: hidden;
         }
-        .hero-names {
+
+        .hero-names-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .hero-name {
             font-family: 'Great Vibes', cursive;
             font-size: 64px;
             color: var(--dark-brown);
             letter-spacing: 3px;
-            line-height: 1.2;
-            margin-bottom: 8px;
+            opacity: 0;
         }
+
+        .hero-name-left {
+            animation: slideInLeft 1.8s ease forwards;
+        }
+
+        .hero-name-right {
+            animation: slideInRight 1.8s ease forwards;
+        }
+
         .hero-ampersand {
+            font-family: 'Great Vibes', cursive;
+            font-size: 64px;
             color: var(--gold);
             font-style: normal;
+            animation: fadeInAmpersand 1.5s ease forwards;
+            animation-delay: 0.8s;
+            opacity: 0;
         }
+
+        @keyframes slideInLeft {
+            0% { transform: translateX(-200px); opacity: 0; }
+            60% { transform: translateX(20px); opacity: 1; }
+            80% { transform: translateX(-10px); opacity: 1; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            0% { transform: translateX(200px); opacity: 0; }
+            60% { transform: translateX(-20px); opacity: 1; }
+            80% { transform: translateX(10px); opacity: 1; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeInAmpersand {
+            0% { opacity: 0; transform: scale(0); }
+            80% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
         .hero-date-line {
             font-family: 'Montserrat', sans-serif;
             font-size: 17px;
@@ -234,11 +327,18 @@
             text-transform: uppercase;
             color: var(--brown);
             margin-bottom: 20px;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 1.2s;
+            opacity: 0;
         }
+
         .hero-arrow {
             font-size: 40px;
             color: var(--gold);
             margin: 15px 0 30px;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 1.5s;
+            opacity: 0;
         }
 
         /* ========== ФОТО ========== */
@@ -269,36 +369,62 @@
         }
 
         /* ========== КАЛЕНДАРИК ========== */
-                // КАЛЕНДАРИК — АВГУСТ 2026 (начинается с субботы)
-        (function(){
-            var c = document.getElementById('calendarDays');
-            // 1 августа 2026 — суббота (6-й день недели, Пн=0, Вс=6)
-            // Но в нашем календаре неделя с Пн по Вс: 1-е число = суббота = позиция 5 (0=Пн, 1=Вт, 2=Ср, 3=Чт, 4=Пт, 5=Сб, 6=Вс)
-            var firstDay = 5; // суббота
-            var daysInMonth = 31;
-            var h = '';
-            
-            // Пустые ячейки до 1-го числа
-            for (var i = 0; i < firstDay; i++) {
-                h += '<span class="empty">·</span>';
-            }
-            
-            // Дни месяца
-            for (var d = 1; d <= daysInMonth; d++) {
-                if (d === 15) {
-                    h += '<span class="day-15" style="position:relative; font-weight:700;">15<span style="position:absolute; top:-6px; left:50%; transform:translateX(-50%); font-size:18px; color:#c4956a; pointer-events:none;">♥</span></span>';
-                } else {
-                    h += '<span>' + d + '</span>';
-                }
-            }
-            
-            c.innerHTML = h;
-        })();
-
-        /* ========== ТАЙМЕР ========== */
-        .timer-section-block {
-            text-align: center;
+        .calendar-mini {
+            width: 240px;
+            margin: 35px auto;
+            background: var(--white);
+            border: 1px solid var(--accent);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.06);
         }
+        .calendar-header {
+            background: var(--dark-brown);
+            color: var(--white);
+            text-align: center;
+            padding: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+        .calendar-body { padding: 18px; }
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-size: 11px;
+            color: var(--brown);
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-size: 14px;
+            color: var(--dark-brown);
+        }
+        .calendar-days span {
+            padding: 6px;
+            border-radius: 50%;
+        }
+        .calendar-days .empty { color: transparent; }
+        .calendar-days .day-15 {
+            background: var(--brown);
+            color: var(--white);
+            font-weight: 600;
+        }
+        .calendar-hearts {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 16px;
+            color: var(--brown);
+            letter-spacing: 4px;
+        }
+
+        /* ========== ТАЙМЕР (фикс для мобильных) ========== */
+        .timer-section-block { text-align: center; }
         .timer-photo-wrapper {
             position: relative;
             width: 100%;
@@ -330,9 +456,7 @@
             gap: 28px;
             align-items: center;
         }
-        .timer-cell {
-            text-align: center;
-        }
+        .timer-cell { text-align: center; }
         .timer-cell .number {
             font-family: 'Cormorant Garamond', serif;
             font-size: 60px;
@@ -586,18 +710,7 @@
             color: var(--dark-brown);
         }
 
-        /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
-        @media (max-width: 600px) {
-            .hero-names { font-size: 44px; }
-            .heading-script { font-size: 36px; }
-            .timer-grid { gap: 15px; }
-            .timer-cell .number { font-size: 40px; }
-            .timer-colon { font-size: 28px; }
-            .photo-frame { width: 220px; height: 300px; }
-            .program-item { flex-direction: column; gap: 8px; }
-            .section-box { padding: 30px 20px; }
-        }
-                /* ========== ПАРЯЩИЕ ЛЕПЕСТКИ ========== */
+        /* ========== ПАРЯЩИЕ ЛЕПЕСТКИ ========== */
         .petals-container {
             position: fixed;
             top: 0;
@@ -608,43 +721,49 @@
             z-index: 0;
             overflow: hidden;
         }
-
         .petal {
             position: absolute;
             top: -60px;
             opacity: 0;
             animation: petalFall linear infinite;
         }
-
         @keyframes petalFall {
             0% {
                 transform: translateY(-60px) rotate(0deg) translateX(0px);
                 opacity: 0;
             }
-            10% {
-                opacity: 0.7;
-            }
-            90% {
-                opacity: 0.5;
-            }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.5; }
             100% {
                 transform: translateY(105vh) rotate(720deg) translateX(120px);
                 opacity: 0;
             }
         }
 
-        @keyframes petalSway {
-            0%, 100% { margin-left: 0; }
-            25% { margin-left: 30px; }
-            75% { margin-left: -30px; }
+        /* ========== МОБИЛЬНАЯ АДАПТАЦИЯ ========== */
+        @media (max-width: 600px) {
+            .hero-name { font-size: 44px; }
+            .hero-ampersand { font-size: 44px; }
+            .heading-script { font-size: 36px; }
+            
+            /* Таймер — адаптация */
+            .timer-grid { gap: 10px; }
+            .timer-cell .number { font-size: 32px; }
+            .timer-colon { font-size: 24px; }
+            .timer-cell .label { font-size: 10px; letter-spacing: 2px; }
+            .timer-photo-wrapper { max-width: 100%; }
+            
+            .photo-frame { width: 220px; height: 300px; }
+            .program-item { flex-direction: column; gap: 8px; }
+            .section-box { padding: 30px 20px; }
         }
     </style>
 </head>
 <body>
-        <!-- ========== ПАРЯЩИЕ ЛЕПЕСТКИ ========== -->
+    <!-- ПАРЯЩИЕ ЛЕПЕСТКИ -->
     <div class="petals-container" id="petalsContainer"></div>
 
-        <!-- ========== ВСТУПИТЕЛЬНЫЙ ЭКРАН ========== -->
+    <!-- ВСТУПИТЕЛЬНЫЙ ЭКРАН -->
     <div class="intro-overlay" id="introOverlay">
         <div style="border: 2px solid var(--light-brown); padding: 50px 40px; text-align: center; position: relative; background: rgba(255,255,255,0.25); max-width: 420px; width: 90%;">
             <span class="corner-decoration corner-tl" style="position:absolute; top:8px; left:8px;"></span>
@@ -658,41 +777,45 @@
         </div>
     </div>
 
-    <!-- ========== КНОПКА МУЗЫКИ ========== -->
+    <!-- КНОПКА МУЗЫКИ -->
     <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
 
-    <!-- ========== АУДИО ========== -->
+    <!-- АУДИО -->
     <audio id="bgMusic" loop preload="auto">
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- ========== ОСНОВНОЙ КОНТЕНТ ========== -->
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
     <div class="main-content" id="mainContent">
 
-        <!-- ГЛАВНЫЙ ЭКРАН -->
-      <section class="hero fade-in">
-    <h1 class="hero-names">Максим <span class="hero-ampersand">&</span> Вероника</h1>
-    <div class="hero-date-line">Август 15 2026</div>
-    <div class="hero-arrow">⌄</div>
-</section>
+        <!-- ГЛАВНЫЙ ЭКРАН — АНИМИРОВАННЫЕ ИМЕНА -->
+        <section class="hero fade-in">
+            <div class="hero-names-wrapper">
+                <span class="hero-name hero-name-left">Максим</span>
+                <span class="hero-ampersand">&</span>
+                <span class="hero-name hero-name-right">Вероника</span>
+            </div>
+            <div class="hero-date-line">Август 15 2026</div>
+            <div class="hero-arrow">⌄</div>
+        </section>
 
-<!-- ДЕКОРАТИВНЫЙ КВАДРАТ -->
-<div class="fade-in fade-in-delay-1" style="text-align:center; padding: 10px 0 30px;">
-    <div style="display:inline-block; border: 2px solid var(--light-brown); padding: 30px 40px; position: relative; max-width: 500px; background: rgba(255,255,255,0.3);">
-        <span class="corner-decoration corner-tl" style="position:absolute; top:6px; left:6px;"></span>
-        <span class="corner-decoration corner-tr" style="position:absolute; top:6px; right:6px;"></span>
-        <span class="corner-decoration corner-bl" style="position:absolute; bottom:6px; left:6px;"></span>
-        <span class="corner-decoration corner-br" style="position:absolute; bottom:6px; right:6px;"></span>
-        <p style="font-family: 'Great Vibes', cursive; font-size: 36px; color: var(--dark-brown); margin-bottom: 12px;">Дорогие гости!</p>
-        <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: #777; line-height: 1.8; font-weight: 300;">
-            Мы счастливы пригласить вас на самый важный день в нашей жизни. Ваше присутствие — лучший подарок для нас!
-        </p>
-        <div style="margin-top: 18px; font-size: 22px; letter-spacing: 6px; color: var(--gold);">✦ ✦ ✦</div>
-    </div>
-</div>
+        <!-- ДЕКОРАТИВНЫЙ КВАДРАТ -->
+        <div class="fade-in fade-in-delay-1" style="text-align:center; padding: 10px 0 30px;">
+            <div style="display:inline-block; border: 2px solid var(--light-brown); padding: 30px 40px; position: relative; max-width: 500px; background: rgba(255,255,255,0.3);">
+                <span class="corner-decoration corner-tl" style="position:absolute; top:6px; left:6px;"></span>
+                <span class="corner-decoration corner-tr" style="position:absolute; top:6px; right:6px;"></span>
+                <span class="corner-decoration corner-bl" style="position:absolute; bottom:6px; left:6px;"></span>
+                <span class="corner-decoration corner-br" style="position:absolute; bottom:6px; right:6px;"></span>
+                <p style="font-family: 'Great Vibes', cursive; font-size: 36px; color: var(--dark-brown); margin-bottom: 12px;">Дорогие гости!</p>
+                <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: #777; line-height: 1.8; font-weight: 300;">
+                    Мы счастливы пригласить вас на самый важный день в нашей жизни. Ваше присутствие — лучший подарок для нас!
+                </p>
+                <div style="margin-top: 18px; font-size: 22px; letter-spacing: 6px; color: var(--gold);">✦ ✦ ✦</div>
+            </div>
+        </div>
 
-<!-- ФОТО 1 (главное) -->
-<div class="photo-frame fade-in fade-in-delay-2">
+        <!-- ФОТО 1 (главное) -->
+        <div class="photo-frame fade-in fade-in-delay-2">
             <img src="https://i.ibb.co/rGGHcXzr/hfDCN9grwFGtyBf1VCe9A1LaZinsVBEtzByulH37u2kyuD2iWMswWnxed1qcmIShloluAOysdNEcBSzSy.jpg" alt="Максим и Вероника">
         </div>
 
@@ -737,7 +860,6 @@
         </div>
 
         <!-- ЛОКАЦИЯ -->
-        <!-- ЛОКАЦИЯ -->
         <section class="fade-in section-box">
             <p class="heading-caps text-center">Локация</p>
             
@@ -769,7 +891,6 @@
                 <p style="font-family: 'Montserrat', sans-serif; font-size: 14px; color: #888; margin-top: 8px;">
                     📍 г. Вольск, ул. Коммунистическая, д. 37
                 </p>
-                <!-- ФОТО 2 (ресторан) -->
                 <img src="https://i.ibb.co/qLWg5k0T/XL.jpg" alt="Ресторан Оазис" class="photo-full">
                 <a href="https://yandex.ru/maps/?text=г.%20Вольск,%20ул.%20Коммунистическая,%20д.37" target="_blank" class="btn-map">Открыть на Яндекс.Картах</a>
             </div>
@@ -794,6 +915,13 @@
                 </div>
             </div>
             <div class="program-item fade-in fade-in-delay-3">
+                <div class="program-time">14:15</div>
+                <div>
+                    <div class="program-name">Фотосессия</div>
+                    <div class="program-desc">Ловим счастливые моменты с фотографом</div>
+                </div>
+            </div>
+            <div class="program-item fade-in fade-in-delay-4">
                 <div class="program-time">16:00</div>
                 <div>
                     <div class="program-name">Банкет</div>
@@ -904,49 +1032,47 @@
         </div>
 
         <!-- АНКЕТА ГОСТЯ -->
-        <!-- АНКЕТА ГОСТЯ -->
-<section class="fade-in section-box">
-    <p class="heading-script" style="font-size:42px;">Анкета гостя</p>
-    <p class="text-body" style="margin-bottom:28px;">
-        Будем очень признательны, если вы подтвердите своё присутствие и заполните анкету <strong>до 1 июля</strong>
-    </p>
-    <div class="rsvp-form">
-        <form id="rsvpForm">
-            <div class="form-group">
-                <label class="form-label">Имя и фамилия</label>
-                <input type="text" class="form-input" name="name" placeholder="Иван Иванов / Мария Иванова" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Подтвердите своё присутствие</label>
-                <div class="radio-group">
-                    <label class="radio-option">
-                        <input type="radio" name="attendance" value="Да, смогу" checked> Да, смогу
-                    </label>
-                    <label class="radio-option">
-                        <input type="radio" name="attendance" value="К сожалению, не смогу"> К сожалению, не смогу
-                    </label>
+        <section class="fade-in section-box">
+            <p class="heading-script" style="font-size:42px;">Анкета гостя</p>
+            <p class="text-body" style="margin-bottom:28px;">
+                Будем очень признательны, если вы подтвердите своё присутствие и заполните анкету <strong>до 1 июля</strong>
+            </p>
+            <div class="rsvp-form">
+                <form id="rsvpForm">
+                    <div class="form-group">
+                        <label class="form-label">Имя и фамилия</label>
+                        <input type="text" class="form-input" name="name" placeholder="Иван Иванов / Мария Иванова" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Подтвердите своё присутствие</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="attendance" value="Да, смогу" checked> Да, смогу
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="attendance" value="К сожалению, не смогу"> К сожалению, не смогу
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Ваши предпочтения в напитках</label>
+                        <div class="drinks-grid">
+                            <label class="drink-option"><input type="checkbox" name="drinks" value="Шампанское"><span class="drink-checkbox"></span>🍾 Шампанское</label>
+                            <label class="drink-option"><input type="checkbox" name="drinks" value="Белое вино"><span class="drink-checkbox"></span>🥂 Белое вино</label>
+                            <label class="drink-option"><input type="checkbox" name="drinks" value="Красное вино"><span class="drink-checkbox"></span>🍷 Красное вино</label>
+                            <label class="drink-option"><input type="checkbox" name="drinks" value="Водка"><span class="drink-checkbox"></span>🥃 Водка</label>
+                            <label class="drink-option"><input type="checkbox" name="drinks" value="Пиво"><span class="drink-checkbox"></span>🍺 Пиво</label>
+                            <label class="drink-option"><input type="checkbox" name="drinks" value="Безалкогольное"><span class="drink-checkbox"></span>🧃 Безалкогольное (сок/минералка)</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit">Отправить</button>
+                </form>
+                <div class="form-success" id="formSuccess">
+                    <p>✨ Спасибо!</p>
+                    <p>Ваша анкета отправлена. С нетерпением ждём вас!</p>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="form-label">Ваши предпочтения в напитках</label>
-                <div class="drinks-grid">
-                    <label class="drink-option"><input type="checkbox" name="drinks" value="Шампанское"><span class="drink-checkbox"></span>🍾 Шампанское</label>
-                    <label class="drink-option"><input type="checkbox" name="drinks" value="Белое вино"><span class="drink-checkbox"></span>🥂 Белое вино</label>
-                    <label class="drink-option"><input type="checkbox" name="drinks" value="Красное вино"><span class="drink-checkbox"></span>🍷 Красное вино</label>
-                    <label class="drink-option"><input type="checkbox" name="drinks" value="Водка"><span class="drink-checkbox"></span>🥃 Водка</label>
-                    <label class="drink-option"><input type="checkbox" name="drinks" value="Пиво"><span class="drink-checkbox"></span>🍺 Пиво</label>
-                    <label class="drink-option"><input type="checkbox" name="drinks" value="Безалкогольное"><span class="drink-checkbox"></span>🧃 Безалкогольное (сок/минералка)</label>
-                </div>
-            </div>
-            <button type="submit" class="btn-submit">Отправить</button>
-        </form>
-        <div class="form-success" id="formSuccess">
-            <p>✨ Спасибо!</p>
-            <p>Ваша анкета отправлена. С нетерпением ждём вас!</p>
-        </div>
-    </div>
-</section>
-       
+        </section>
 
         <footer class="footer fade-in">С нетерпением ждём вас!</footer>
 
@@ -960,29 +1086,21 @@
         var musicBtn = document.getElementById('musicBtn');
 
         introOverlay.addEventListener('click', function() {
-            // Плавное исчезновение (2 секунды)
             introOverlay.classList.add('fade-out');
-
-            // Включаем музыку
             bgMusic.volume = 0.3;
             bgMusic.play().then(function() {
                 musicBtn.classList.add('playing');
             }).catch(function() {
                 console.log('Нужен файл music.mp3');
             });
-
-            // Плавно показываем контент
             setTimeout(function() {
                 mainContent.classList.add('visible');
             }, 500);
-
-            // Удаляем оверлей после анимации
             setTimeout(function() {
                 introOverlay.style.display = 'none';
-            }, 2000);
+            }, 2500);
         });
 
-        // КНОПКА МУЗЫКИ
         function toggleMusic() {
             if (bgMusic.paused) {
                 bgMusic.play();
@@ -993,13 +1111,21 @@
             }
         }
 
-        // КАЛЕНДАРИК
+        // КАЛЕНДАРИК — АВГУСТ 2026 (начинается с субботы)
         (function(){
             var c = document.getElementById('calendarDays');
+            var firstDay = 5; // суббота
+            var daysInMonth = 31;
             var h = '';
-            for (var i = 0; i < 6; i++) h += '<span class="empty">·</span>';
-            for (var d = 1; d <= 31; d++) {
-                h += (d === 15) ? '<span class="day-15">15</span>' : '<span>' + d + '</span>';
+            for (var i = 0; i < firstDay; i++) {
+                h += '<span class="empty">·</span>';
+            }
+            for (var d = 1; d <= daysInMonth; d++) {
+                if (d === 15) {
+                    h += '<span class="day-15" style="position:relative; font-weight:700;">15<span style="position:absolute; top:-8px; left:50%; transform:translateX(-50%); font-size:20px; color:#c4956a; pointer-events:none;">♥</span></span>';
+                } else {
+                    h += '<span>' + d + '</span>';
+                }
             }
             c.innerHTML = h;
         })();
@@ -1028,27 +1154,20 @@
         tick();
         setInterval(tick, 1000);
 
-        // АНКЕТА
         // АНКЕТА — отправка через Formspree
         document.getElementById('rsvpForm').addEventListener('submit', function(e){
             e.preventDefault();
-
             var form = this;
             var formData = new FormData(form);
-
-            // Собираем напитки
             var checkedDrinks = document.querySelectorAll('input[name="drinks"]:checked');
             var drinksList = [];
             checkedDrinks.forEach(function(cb) {
                 drinksList.push(cb.value);
             });
             formData.append('Напитки', drinksList.join(', ') || 'Не указано');
-
             var btn = form.querySelector('.btn-submit');
             btn.textContent = 'Отправляется...';
             btn.style.opacity = '0.7';
-
-            // ЗДЕСЬ ВСТАВЬ СВОЙ КОД ИЗ FORMSPREE
             fetch('https://formspree.io/f/xnjwgpzv', {
                 method: 'POST',
                 body: formData,
@@ -1070,61 +1189,42 @@
                 btn.style.opacity = '1';
             });
         });
-                // ПАРЯЩИЕ ЛЕПЕСТКИ
+
+        // ПАРЯЩИЕ ЛЕПЕСТКИ
         (function() {
             var container = document.getElementById('petalsContainer');
             var petalShapes = ['🌸', '💮', '🏵️', '🌺', '✿', '❀', '🌷', '⚘'];
-            var colors = [
-                'rgba(212, 196, 176, 0.4)',  // бежевый
-                'rgba(166, 138, 100, 0.35)', // золотой
-                'rgba(200, 180, 160, 0.4)',  // светлый
-                'rgba(180, 150, 130, 0.35)', // тёплый
-            ];
-
             function createPetal() {
                 var petal = document.createElement('div');
                 petal.className = 'petal';
-                
-                // Случайный размер
-                var size = Math.random() * 20 + 10;
-                petal.style.fontSize = size + 'px';
-                
-                // Случайная позиция слева
+                petal.style.fontSize = (Math.random() * 20 + 10) + 'px';
                 petal.style.left = Math.random() * 100 + '%';
-                
-                // Случайный лепесток
                 petal.textContent = petalShapes[Math.floor(Math.random() * petalShapes.length)];
-                
-                // Случайная длительность падения
                 var duration = Math.random() * 12 + 10;
                 petal.style.animationDuration = duration + 's';
-                
-                // Случайная задержка
                 petal.style.animationDelay = Math.random() * 8 + 's';
-                
-                // Случайный цвет (для текстовых эмодзи не нужен, но если захочешь кружочки — пригодится)
-                petal.style.color = colors[Math.floor(Math.random() * colors.length)];
-                
                 container.appendChild(petal);
-                
-                // Удаляем после завершения анимации
-                setTimeout(function() {
-                    petal.remove();
-                }, (duration + 8) * 1000);
+                setTimeout(function() { petal.remove(); }, (duration + 8) * 1000);
             }
-
-            // Создаём начальные лепестки
-         for (var i = 0; i < 25; i++) {
-                setTimeout(function() {
-                    createPetal();
-                }, i * 250);
+            for (var i = 0; i < 25; i++) {
+                setTimeout(function() { createPetal(); }, i * 250);
             }
-
-            // Создаём новые лепестки чаще
-            setInterval(function() {
-                createPetal();
-            }, 900);
+            setInterval(function() { createPetal(); }, 900);
         })();
+
+        // ПЛАВНЫЕ ПЕРЕХОДЫ ПРИ СКРОЛЛЕ
+        var revealElements = document.querySelectorAll('.section-box, .timer-section-block, .calendar-mini, .photo-frame, .section-divider');
+        var revealObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        revealElements.forEach(function(el) {
+            el.classList.add('reveal');
+            revealObserver.observe(el);
+        });
     </script>
 
 </body>
