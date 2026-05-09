@@ -331,22 +331,22 @@
         }
 
         @keyframes slideInLeft {
-            0% { transform: translateX(-200px); opacity: 0; }
-            60% { transform: translateX(20px); opacity: 1; }
-            80% { transform: translateX(-10px); opacity: 1; }
+            0% { transform: translateX(-250px); opacity: 0; }
+            70% { transform: translateX(15px); opacity: 1; }
+            85% { transform: translateX(-8px); opacity: 1; }
             100% { transform: translateX(0); opacity: 1; }
         }
 
         @keyframes slideInRight {
-            0% { transform: translateX(200px); opacity: 0; }
-            60% { transform: translateX(-20px); opacity: 1; }
-            80% { transform: translateX(10px); opacity: 1; }
+            0% { transform: translateX(250px); opacity: 0; }
+            70% { transform: translateX(-15px); opacity: 1; }
+            85% { transform: translateX(8px); opacity: 1; }
             100% { transform: translateX(0); opacity: 1; }
         }
 
         @keyframes fadeInAmpersand {
             0% { opacity: 0; transform: scale(0); }
-            80% { opacity: 1; transform: scale(1.2); }
+            85% { opacity: 1; transform: scale(1.15); }
             100% { opacity: 1; transform: scale(1); }
         }
 
@@ -820,14 +820,14 @@
     <div class="main-content" id="mainContent">
 
         <!-- ГЛАВНЫЙ ЭКРАН — АНИМИРОВАННЫЕ ИМЕНА -->
-        <section class="hero fade-in">
+        <section class="hero">
             <div class="hero-names-wrapper">
-                <span class="hero-name hero-name-left">Максим</span>
-                <span class="hero-ampersand">&</span>
-                <span class="hero-name hero-name-right">Вероника</span>
+                <span class="hero-name hero-name-left" style="animation: slideInLeft 2.5s ease forwards;">Максим</span>
+                <span class="hero-ampersand" style="animation: fadeInAmpersand 2s ease forwards; animation-delay: 1s;">&</span>
+                <span class="hero-name hero-name-right" style="animation: slideInRight 2.5s ease forwards; animation-delay: 0.4s;">Вероника</span>
             </div>
-            <div class="hero-date-line">Август 15 2026</div>
-            <div class="hero-arrow">⌄</div>
+            <div class="hero-date-line" style="animation: fadeInUpSimple 1.5s ease forwards; animation-delay: 1.8s; opacity: 0;">Август 15 2026</div>
+            <div class="hero-arrow" style="animation: fadeInUpSimple 1.5s ease forwards; animation-delay: 2.2s; opacity: 0;">⌄</div>
         </section>
 
         <!-- ДЕКОРАТИВНЫЙ КВАДРАТ -->
